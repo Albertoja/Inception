@@ -1,0 +1,28 @@
+#MariaDB utiliza archivos .cnf, utilizo la carpeta estandar de archivos /etc/my.cnf.d/ donde el servidor buscara los .cnf
+#que añado ahí (MariaDb no tiene en cuenta los .cnf con permisos de escritura libres para cualquier usuario)
+
+#Modifico todos los clientes y a MariaDB, añado aqui las configuraciones comunes
+[client-server]
+#Señalo el puerto que voy a utilizar (3306) predeterminado de mysql
+port = 3306
+#Modifico la localicación del socket que viene por defecto, ya que la carpeta por defecto por un bug no se crea durante la instalación
+socket = /var/lib/mysql/mysqld.sock
+
+#La configuración de la instalación de mysql
+[mysql_install_db]
+#Me saltola base de datos de prueba (Que hace automaticamente) evitando borrarlos despues
+skip-test-db
+#Dirección donde se almacenaran los archivos
+datadir = /var/lib/mysql
+
+#Configuración del servidor
+[mysqld]
+#El usuario por defecto del servidor(Así no se ejecutara como root)
+user = mysql
+#Desactivo las opciones de conexiones TCP/IP (Protocolo de control de transmisión ip)
+skip-networking = false
+#Permito la conexión desde cualquier ip al azar de los contenedores
+bind-address = 0.0.0.0
+#Ejecuto un archivo con ordenes sql al iniciarse, lo usaré para elementos de seguridad y para generar la base de datos
+#para que el wordpress funcione
+init-file = /etc/my.cnf.d/initfile.sql

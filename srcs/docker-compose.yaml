@@ -1,0 +1,110 @@
+#Docker-compose crea y administra multiples contenedores a la vez, utilizando un único set de comandos podemos
+#poner en funcionamiento todos los servicios a la vez
+#El archivo .yaml lee los distintos comandos que tiene que ejecutar docker, todos ellos lanzados de manera automática
+#Podemos dar los datos del nombre de la imagen, puertos, dependencias, redes etc.. todo en un mismo archivo
+#Se divide en varios bloques principales
+
+
+#Señalo la versión de docker-compose que utilizara el conjunto de imagenes en este archivo(No se relaciona con la version de docker)
+version: "3.9"
+
+#Defino todos mis servicios, cada uno definido por cada contenedor de nombre único
+services:
+
+    #Nombre del servicio
+    nginx:
+        #Nombre del contenedor al lanzarse
+        container_name: nginx
+        #Valores durante durante la creación de la imagen
+        build:
+            #Dirección de su dockerfile desde donde se generara la imagen
+            context: ./requirements/nginx
+            #Añado argumentos de construcción para las variables que necesito, seran utilizadas por el dockerfile(solo durante la fase de construcción)
+            args:
+                DOMAIN_NAME: ${DOAIN_NAME}
+        #Puertos necesarios enlazandolos con el puerto host que queremos
+        ports:
+            - "443:443"
+        #Se lanzara en orden, esperando a los procesos de los que dependan
+        depends_on:
+            -wordpress
+        #Defino los volumenes que utilizará el contenedor, es un sistema de archivos persistente(mantiene los datos incluso cuand oel contenedor se elimina)
+        #(También se utiliza para compartir archivos entre distintos contenedores)
+        #En este caso,utilizamos volúmenes con nombre, que docker generará inicialmente en su localización por defecto para volúmenes
+        #(nombre_del_volumen:path/dentro/del/contenedor)
+        #Utilizo dos volúmenes distintos, uno con los datos del propio wordpress, que ha de ser accesible tanto por
+        #nginx como por php, y otro con la propia base de datos
+        volumes:
+            - wordpress:/var/www/wordpress
+        #Señalo la red interna de docker al que se conectara cada contenedor
+        networks:
+            - nginx-php
+        #Señala si el sistema ha de lanzarse de nuevo en caso de errores(En este caso si, siempre)
+        restart: always
+    
+    #Nombre del servicio
+    wordpress:
+        #Nombre del contenedor al lanzarse
+        container_name: wordpress
+        #Valores durante durante la creación de la imagen
+        build: ./requirements/wordpress
+        #Se lanzara en orden, esperando a los procesos de los que dependan
+        depends_on:
+            - mariadb
+        #Añado las variables deseadas como variables de entorno dentro de la imagen. Estas variables son visibles
+        #sólo durante la ejecución, no durante el montaje de la imagen.
+        enviroment:
+            MADB_USER: ${MADB_USER}
+            MADB_PASSW: ${MADB_PASSW}
+            WP_DB_NAME: ${WP_DB_NAME}
+            AUTH_KEY: ${AUTH_KEY}
+            SECURE_AUTH_KEY: ${SECURE_AUTH_KEY}
+            LOGGED_IN_KEY: ${LOGGED_IN_KEY}
+            NONCE_KEY: ${NONCE_KEY}
+            AUTH_SALT: ${AUTH_SALT}
+            SECURE_AUTH_SALT: ${SECURE_AUTH_SALT}
+            LOGGED_IN_SALT: ${LOGGED_IN_SALT}
+            NONCE_SALT: ${NONCE_SALT}
+        #Defino los volumenes que utilizará el contenedor, es un sistema de archivos persistente(mantiene los datos incluso cuand oel contenedor se elimina)
+        #(También se utiliza para compartir archivos entre distintos contenedores)
+        #En este caso,utilizamos volúmenes con nombre, que docker generará inicialmente en su localización por defecto para volúmenes
+        #(nombre_del_volumen:path/dentro/del/contenedor)
+        #Utilizo dos volúmenes distintos, uno con los datos del propio wordpress, que ha de ser accesible tanto por
+        #nginx como por php, y otro con la propia base de datos
+        volumes:
+             - wordpress:/var/www/wordpress
+        #Señalo la red interna de docker al que se conectara cada contenedor
+        networks:
+        - nginx-php
+        - php-database
+        #Señala si el sistema ha de lanzarse de nuevo en caso de errores(En este caso si, siempre)
+        restart: always
+
+    mariadb:
+        #Nombre del contenedor al lanzarse
+        container_name: mariadb
+        #Valores durante durante la creación de la imagen
+        build:
+        #Dirección de su dockerfile desde donde se generara la imagen
+        context: ./requirements/mariadb
+        #Añado argumentos de construcción para las variables que necesito, seran utilizadas por el dockerfile(solo durante la fase de construcción)
+        args:
+            MADB_ROOT_PASSW: ${MADB_ROOT_PASSW}
+            MADB_USER: ${MADB_USER}
+            MADB_PASSW: ${MADB_PASSW}
+            WP_DB_NAME: ${WP_DB_NAME}
+        #Defino los volumenes que utilizará el contenedor, es un sistema de archivos persistente(mantiene los datos incluso cuand oel contenedor se elimina)
+        #(También se utiliza para compartir archivos entre distintos contenedores)
+        #En este caso,utilizamos volúmenes con nombre, que docker generará inicialmente en su localización por defecto para volúmenes
+        #(nombre_del_volumen:path/dentro/del/contenedor)
+        #Utilizo dos volúmenes distintos, uno con los datos del propio wordpress, que ha de ser accesible tanto por
+        #nginx como por php, y otro con la propia base de datos
+        volumes:
+        - database:/var/lib/mysql
+        #Señalo la red interna de docker al que se conectara cada contenedor
+        networks:
+        - php-database
+        #Señala si el sistema ha de lanzarse de nuevo en caso de errores(En este caso si, siempre)
+        restart: always
+        
+
