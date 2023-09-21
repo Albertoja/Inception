@@ -4,7 +4,7 @@ FROM alpine:3.17
 
 #Variable utilizada para la build de la imagen, definida en el docker-compose y en el .env
 
-ARG DOMAIN
+ARG DOMAIN_NAME
 
 #Uso apk(el apt de alpine), flag --no-cache para no guardar en el cache del contenedor de imagenes, instalamos nginx y openssl y generamos el certificado
 #y lo genero dentro del contenedor para poder usar https
@@ -19,9 +19,9 @@ RUN apk update && apk upgrade && apk add --no-cache nginx openssl \
 
 COPY --chmod=644 ./conf/nginx.conf /etc/nginx/http.d/
 
-#Nginx no sustituye las variables de entorno de sus archivos .conf, utilizo sed para sustituir la variable $DOMAIN
+#Nginx no sustituye las variables de entorno de sus archivos .conf, utilizo sed para sustituir la variable $DOMAIN_NAME
 
-RUN sed -i "s/\$DOMAIN/$DOMAIN/g" /etc/nginx/http.d/nginx.conf
+RUN sed -i "s/\$DOMAIN_NAME/$DOMAIN_NAME/g" /etc/nginx/http.d/nginx.conf
 
 #Utilizamos el protocolo HTTPS, por tanto el puerto será 443
 
