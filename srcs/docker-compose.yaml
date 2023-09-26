@@ -25,6 +25,7 @@ services:
         #Se lanzara en orden, esperando a los procesos de los que dependan
         depends_on:
             - wordpress
+            - mariadb
         #Defino los volumenes que utilizará el contenedor, es un sistema de archivos persistente(mantiene los datos incluso cuand oel contenedor se elimina)
         #(También se utiliza para compartir archivos entre distintos contenedores)
         #En este caso,utilizamos volúmenes con nombre, que docker generará inicialmente en su localización por defecto para volúmenes
@@ -38,6 +39,7 @@ services:
             - nginx-php
         #Señala si el sistema ha de lanzarse de nuevo en caso de errores(En este caso si, siempre)
         restart: always
+        
     
     #Nombre del servicio
     wordpress:
@@ -73,6 +75,7 @@ services:
         #Señalo la red interna de docker al que se conectara cada contenedor
         networks:
           - php-database
+          - nginx-php
         #Señala si el sistema ha de lanzarse de nuevo en caso de errores(En este caso si, siempre)
         restart: always
 
