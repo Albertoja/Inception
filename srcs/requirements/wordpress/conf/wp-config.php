@@ -14,8 +14,6 @@ define( 'DB_HOST', 'mariadb:3306'); //Señalo el host donde estara la base de da
 define( 'DB_CHARSET', 'utf8' ); //Codificacion de carácteres común
 define( 'DB_COLLATE', '' );
 
-define( 'WP_REDIS_HOST', 'redis' );
-define( 'WP_REDIS_PREFIX', getenv('WP_DB_NAME') );
 
 /* Contraseñas y SALTs, distinas contraseñas y sus respectivos 
    SALT(conjunto de bits aleatorios que se usan como una de las entradas en una función derivadora de claves)
@@ -41,5 +39,7 @@ define( 'WP_DEBUG', false ); //Desactivo el modo depuración de Wordpress
 if ( ! defined( 'ABSPATH' ) ) {
         define( 'ABSPATH', __DIR__ . '/' );
 }
+
+define('UPLOADS', 'wp-content/uploads');
 
 require_once ABSPATH . 'wp-settings.php'; //Archivo de opciones del wordpress
