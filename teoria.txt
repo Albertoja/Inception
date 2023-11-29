@@ -1,0 +1,99 @@
+Claves API: son códigos alfanuméricos que se utilizan para autenticar y autorizar el acceso a servicios o recursos en línea. 
+            Estas claves son utilizadas para identificar la aplicación, el usuario o el dispositivo que solicita acceso a una
+            API (Interfaz de Programación de Aplicaciones)
+
+Docker-compose.yml: es un archivo de configuración utilizado por Docker Compose, una herramienta de Docker que facilita la
+                    definición y ejecución de aplicaciones multi-contenedor. Este archivo se utiliza para describir los 
+                    servicios, redes y volúmenes necesarios para ejecutar una aplicación Docker.
+
+Docker: es una plataforma de código abierto diseñada para facilitar la creación, implementación y ejecución de aplicaciones
+        en contenedores. Los contenedores son entornos ligeros y portátiles que pueden ejecutar aplicaciones y sus dependencias,
+        de forma aislada de otros procesos y del sistema operativo del host. Docker proporciona una manera de empacar aplicaciones
+        y sus dependencias en contenedores, lo que permite una fácil portabilidad entre diferentes entornos, como el desarrollo local,
+        la implementación en la nube o en servidores de producción.
+
+Docker compose:Docker Compose es una herramienta que permite definir y gestionar aplicaciones multi-contenedor en Docker de una 
+                      manera declarativa y basada en archivos de configuración. Con Docker Compose, puedes describir las configuraciones 
+                      de los servicios, redes y volúmenes que componen tu aplicación en un archivo YAML llamado docker-compose.yml
+
+                Servicios: En Docker Compose, un servicio es básicamente un contenedor. El archivo docker-compose.yml permite definir múltiples
+                          servicios, cada uno representando una parte de tu aplicación. Cada servicio puede basarse en una imagen de Docker
+                          específica, configurarse con opciones como puertos expuestos, volúmenes, variables de entorno, etc.
+
+                Redes: Puedes definir redes personalizadas para conectar los servicios. Esto es útil cuando necesitas que los contenedores
+                      se comuniquen entre sí. Docker Compose crea automáticamente una red por defecto para tus servicios, pero puedes personalizar
+                      esto según tus necesidades.
+                
+                Volumenes: Puedes definir volúmenes para persistir datos o compartir datos entre contenedores.
+
+Contenedores: Los contenedores son unidades de software que encapsulan una aplicación y sus dependencias, incluidas bibliotecas y
+              otros archivos necesarios para ejecutarse. Los contenedores permiten la ejecución de aplicaciones de manera consistente
+              en diferentes entornos sin preocuparse por las diferencias en el sistema operativo subyacente.
+        
+Imágenes: Una imagen de Docker es un paquete ejecutable que incluye todo lo necesario para ejecutar una aplicación,
+          incluyendo el código, bibliotecas, dependencias y configuraciones. Las imágenes son la base para crear contenedores.
+
+Dockerfile: Un Dockerfile es un archivo de configuración que define cómo se construirá una imagen de Docker. 
+            Contiene instrucciones para instalar software, copiar archivos y configurar el entorno dentro de la imagen.
+
+
+-Sin Docker Compose:
+Manualidad: Sin Docker Compose, debes ejecutar manualmente cada contenedor con el comando docker run. 
+            Esto significa que debes especificar todas las opciones de configuración y enlace de contenedores
+            manualmente en la línea de comandos.
+
+Falta de orquestación: No hay una forma declarativa de describir la arquitectura de tu aplicación y sus relaciones.
+                       La orquestación y la gestión de múltiples contenedores deben ser manejadas de forma separada.
+
+Complejidad: Para aplicaciones complejas con varios servicios, la administración manual puede volverse complicada y
+             propensa a errores.
+
+-Con Docker Compose:
+Declaratividad: Docker Compose utiliza un archivo docker-compose.yml que permite describir de manera declarativa la configuración
+                de tu aplicación, incluidos los servicios, las redes y los volúmenes. Esto hace que sea más fácil entender y
+                gestionar la arquitectura de tu aplicación.
+
+Simplicidad: La orquestación de múltiples contenedores se simplifica. Puedes iniciar todos los servicios con un solo comando
+             (docker-compose up) y detenerlos con otro (docker-compose down).
+
+Configuración centralizada: Toda la configuración está centralizada en el archivo docker-compose.yml,
+                            lo que facilita la gestión de la configuración y su mantenimiento.
+
+Gestión de red y volúmenes simplificada: Puedes definir redes personalizadas y volúmenes en el archivo docker-compose.yml, 
+                                         lo que simplifica la gestión de la conectividad entre los contenedores y la persistencia de datos.
+
+
+Docker y las máquinas virtuales (VM) son tecnologías de virtualización que ofrecen diferentes enfoques para la implementación y
+gestión de aplicaciones y servicios. A continuación, se describen algunos beneficios de Docker en comparación con las máquinas
+virtuales:
+
+Eficiencia en el uso de recursos:
+
+Docker: Los contenedores comparten el mismo kernel del sistema operativo del host, lo que los hace más ligeros y eficientes 
+        en términos de recursos. Múltiples contenedores pueden ejecutarse en un solo sistema operativo sin duplicar la sobrecarga 
+        del sistema.
+VM: Cada máquina virtual incluye un sistema operativo completo, lo que consume más recursos en comparación con los contenedores.
+Arranque rápido:
+
+Docker: Los contenedores se inician rápidamente porque no requieren arrancar un sistema operativo completo.
+VM: Las máquinas virtuales pueden tener tiempos de arranque más lentos ya que deben iniciar un sistema operativo completo.
+Portabilidad y consistencia:
+
+Docker: Los contenedores son portátiles y consistentes en diferentes entornos. Funcionarán de manera similar en cualquier entorno
+        que admita Docker, desde el desarrollo hasta la producción.
+VM: Las VM también son portátiles, pero pueden ser más grandes y tener dependencias más complejas.
+Mayor densidad de despliegue:
+
+Docker: Puedes ejecutar más contenedores en un mismo host debido a la menor sobrecarga del sistema.
+VM: La sobrecarga de las VMs, que incluye un sistema operativo completo, puede limitar la cantidad de máquinas virtuales que puedes
+    ejecutar en un solo host.
+Desarrollo y prueba simplificados:
+
+Docker: Docker facilita la creación de entornos de desarrollo y prueba consistentes, ya que los contenedores encapsulan todas las
+        dependencias necesarias para la aplicación.
+VM: Aunque las VM también son útiles para entornos de desarrollo y prueba, pueden ser más pesadas y lentas para crear y desplegar.
+Escalabilidad y orquestación:
+
+Docker: Herramientas como Docker Compose y Kubernetes facilitan la orquestación y el escalado de contenedores.
+VM: La orquestación de VMs puede ser más compleja y puede requerir herramientas específicas
+
