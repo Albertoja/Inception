@@ -3,7 +3,7 @@ DATADIR = /home/${LOGIN}/data
 VOLWORDPRESS = ${DATADIR}/wordpress
 VOLADMINER = ${DATADIR}/adminer
 VOLDATABASE = ${DATADIR}/database
-COMPOSE_SRCS = srcs/docker-compose.yaml
+COMPOSE_SRCS = srcs/docker-compose.yml
 UPFLAG = --detach
 DOWNFLAG = --volumes --rmi all
 
@@ -33,14 +33,16 @@ stop:
 down:
 	@docker compose -f ${COMPOSE_SRCS} down
 
-clean:
-	@docker compose -f ${COMPOSE_SRCS} down ${DOWNFLAG}
-	@sudo rm -rf ${DATADIR}
-
-prune:
-	@docker system prune -af --volumes
-
-fclean: clean prune
+clean: down
+	@printf "Purge configuration ${name}...\n"
+	@docker system prune -a
+fclean:
+	@printf "Full cleanup of all docker configurations\n"
+	@docker stop $$(docker ps -qa)
+	@docker system prune --all --force --volumes
+	@docker volume rm $$(docker volume ls -q)
+	@docker network prune --force
+	@docker volume prune --force
 
 re: fclean all
 

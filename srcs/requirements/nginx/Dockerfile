@@ -29,5 +29,5 @@ EXPOSE 443
 
 #Dentro del contenedor ejecutamos la función -g para utilizar "daemon off", ya que si estuviera en on no detectaria el proceso principal y se cerraria al instante
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
 

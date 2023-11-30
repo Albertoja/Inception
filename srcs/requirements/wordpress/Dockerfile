@@ -37,4 +37,4 @@ COPY --chmod=644 ./conf/wordpress_site.conf /etc/php81/php-fpm.d
 COPY --chown=wordpress_user:wordpress_user --chmod=644 ./conf/wp-config.php /var/www/wordpress
 
 #Ejecuto php-fpm con con flag -F para evitar que se ejecute como daemon(segundo plano) para que se mantenga en principal y primer plano
-ENTRYPOINT ["/usr/sbin/php-fpm81", "-F"]
+CMD ["/usr/sbin/php-fpm81", "-F"]

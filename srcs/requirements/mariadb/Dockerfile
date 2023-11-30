@@ -30,4 +30,4 @@ RUN mysql_install_db \
 
 #Ejecuto el servidor, se ejecutara con la configuración anterior pero sin montarse
 
-ENTRYPOINT ["mysqld"]
+CMD ["mysqld"]
