@@ -97,3 +97,20 @@ Escalabilidad y orquestación:
 Docker: Herramientas como Docker Compose y Kubernetes facilitan la orquestación y el escalado de contenedores.
 VM: La orquestación de VMs puede ser más compleja y puede requerir herramientas específicas
 
+SSL: la configuration se encuentra en nginx.conf y se puede ver si pone http antes de la pagina
+
+
+
+Docker Network es una característica de Docker que permite a los contenedores comunicarse entre sí y con otros recursos de red de manera eficiente y segura. Cuando ejecutas contenedores Docker, cada contenedor tiene su propia interfaz de red y su propio espacio de direcciones IP. Docker Network te proporciona formas de conectar contenedores entre sí y con el mundo exterior.
+
+Bridge Network (Red Puente): Es la red predeterminada que Docker crea cuando instalas Docker en tu sistema. Los contenedores conectados a una red de puente pueden comunicarse entre sí mediante el nombre del contenedor y exponer puertos para comunicarse con el mundo exterior. Los contenedores en la misma red de puente pueden comunicarse entre sí directamente utilizando sus nombres de contenedor como direcciones de red.
+
+https://aespinos.42.fr:80
+https://aespinos.42.fr/wp-login
+
+docker exec -it mariadb mysql -u root
+show databases;
+
+Nginx : funciona como servidor web y administrador de solicitudes, enviando cada consulta al servicio adecuado, especialmente a los servidores PHP o Adminer. Por motivos de seguridad, sólo se permiten conexiones HTTPS. En este caso, y sólo como herramienta de prueba, también crea los certificados SSL necesarios para permitir conexiones HTTPS. En cualquier otro entorno, este certificado DEBE estar firmado por una Autoridad de certificación (CA).
+MariaDB : Crea la base de datos necesaria para el sitio Wordpress, así como los usuarios definidos como administradores en el archivo .env.
+Wordpress : La instalación de Wordpress en sí utiliza PHP-FPM como intérprete de todas las solicitudes de entrada. Este servicio se conecta también con la base de datos, para poder actualizarla cuando sea necesario.
